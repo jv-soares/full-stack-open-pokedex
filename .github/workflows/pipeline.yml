@@ -34,6 +34,17 @@ jobs:
         run: npx playwright test
       - name: Deploy
         if: github.ref == 'refs/heads/main'
+        run: curl "$deploy_url"
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        run: curl "$deploy_url"
+  tag_release:
+    needs: simple_deployment_pipeline
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Bump version and push tag
+        if: github.ref == 'refs/heads/main'
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
