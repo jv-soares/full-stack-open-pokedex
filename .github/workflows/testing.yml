@@ -22,7 +22,3 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
-      - name: is testing logic
-        run: echo "$is_testing_logic"
-        env:
-          is_testing_logic: ${{ contains(join(github.event.commits.*.message), 'testing logic') }}
