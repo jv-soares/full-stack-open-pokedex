@@ -38,7 +38,7 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
   tag_release:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && contains(join(github.event.commits.*.message), '#skip') == false
     needs: simple_deployment_pipeline
     runs-on: ubuntu-20.04
     steps:
