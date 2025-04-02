@@ -39,18 +39,24 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
       - name: Notify Discord on success
         if: ${{ success() }}
-        uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: sarisia/actions-status-discord@5ddd3b114a98457dd80a39b2f00b6a998cd69008
         with:
-          args: 'A new version of Pokedex was deployed!'
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          title: 'Deploy succeeded'
+          description: 'A new version of Pokedex is live!'
+          url: 'https://github.com/jv-soares/full-stack-open-pokedex'
+          color: 0x00ff00
       - name: Notify Discord on failure
         if: ${{ failure() }}
-        uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: sarisia/actions-status-discord@5ddd3b114a98457dd80a39b2f00b6a998cd69008
         with:
-          args: 'Build failed with commit {{ GITHUB_SHA }}'
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          title: 'Deploy failed'
+          description: 'Commit: ${{ github.sha }}'
+          url: 'https://github.com/jv-soares/full-stack-open-pokedex'
+          color: 0xff0000
 
   tag_release:
     if: github.ref == 'refs/heads/main' && contains(join(github.event.commits.*.message), '#skip') == false
