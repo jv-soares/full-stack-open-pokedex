@@ -56,7 +56,6 @@ jobs:
           username: GitHub Actions
           title: 'Deploy failed 👺'
           description: 'Commit: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})'
-          url: 'https://github.com/jv-soares/full-stack-open-pokedex'
           color: 0xff0000
 
   tag_release:
