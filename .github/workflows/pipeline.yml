@@ -42,19 +42,20 @@ jobs:
         uses: sarisia/actions-status-discord@5ddd3b114a98457dd80a39b2f00b6a998cd69008
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
           username: GitHub Actions
-          title: 'Deploy succeeded'
+          title: 'Deploy succeeded 😎'
           description: 'A new version of Pokedex is live!'
-          url: 'https://github.com/jv-soares/full-stack-open-pokedex'
           color: 0x00ff00
       - name: Notify Discord on failure
         if: ${{ failure() }}
         uses: sarisia/actions-status-discord@5ddd3b114a98457dd80a39b2f00b6a998cd69008
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
           username: GitHub Actions
-          title: 'Deploy failed'
-          description: 'Commit: ${{ github.sha }}'
+          title: 'Deploy failed 👺'
+          description: 'Commit: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/${{ github.sha }})'
           url: 'https://github.com/jv-soares/full-stack-open-pokedex'
           color: 0xff0000
 
