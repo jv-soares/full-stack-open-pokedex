@@ -37,13 +37,20 @@ jobs:
         run: curl "$deploy_url"
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-      - name: Notify Discord
+      - name: Notify Discord on success
         if: ${{ success() }}
         uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           args: 'A new version of Pokedex was deployed!'
+      - name: Notify Discord on failure
+        if: ${{ failure() }}
+        uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: 'Build failed {{ EVENT_PAYLOAD.status.sha }}'
 
   tag_release:
     if: github.ref == 'refs/heads/main' && contains(join(github.event.commits.*.message), '#skip') == false
