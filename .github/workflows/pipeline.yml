@@ -14,7 +14,7 @@ on:
 jobs:
   simple_deployment_pipeline:
     timeout-minutes: 60
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -61,7 +61,7 @@ jobs:
   tag_release:
     if: github.ref == 'refs/heads/main' && contains(join(github.event.commits.*.message), '#skip') == false
     needs: simple_deployment_pipeline
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
